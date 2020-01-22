@@ -71,6 +71,7 @@ class EventBuilder extends React.Component {
         method: 'POST',
         body: JSON.stringify({
           password: this.state.password,
+          escapeStep: this.props.escapeStep,
         }),
         headers: {"Content-Type": "application/json"}
       })
@@ -82,6 +83,7 @@ class EventBuilder extends React.Component {
             toaster.warning('WRONG!!');
           }
         });
+      this.setState({password: ''});
     }
   }
 
@@ -122,8 +124,19 @@ class EventBuilder extends React.Component {
               <Button marginLeft={5} appearance="primary" intent="success" onClick={this.submitPassword}>Submit Password</Button>
             </div>
           ) : (
-            <div className='send-in-the-data'>
-              <Button marginLeft={5} intent="danger" onClick={this.sendData}>SEND IN THE DATA!</Button>
+            <div>
+              <div className='send-in-the-data'>
+                <Button marginLeft={5} intent="danger" onClick={this.sendData}>SEND IN THE DATA!</Button>
+              </div>
+              <div className='password-container'>
+                <TextInput
+                  onChange={this.updatePassword}
+                  onKeyDown={this.submitPassword}
+                  placeholder='On to the next step?'
+                  value={this.state.password}
+                />
+                <Button marginLeft={5} appearance="primary" intent="success" onClick={this.submitPassword}>Submit Password</Button>
+              </div>
             </div>
           )}
       </div>

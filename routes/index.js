@@ -9,10 +9,19 @@ router.get('/', function(req, res, next) {
 
 router.post('/password', (req, res) => {
   const password = req.body.password;
-  if (password == 'Prakash4President') {
-    res.send({success: true});
-  } else {
-    res.send({success: false});
+  const escapeStep = JSON.stringify(req.body.escapeStep);
+  if (escapeStep === '2') {
+    if (password === 'Prakash4President') {
+      res.send({success: true});
+    } else {
+      res.send({success: false});
+    }
+  } else if (escapeStep === '3') {
+    if (password === '1115') {
+      res.send({success: true});
+    } else {
+      res.send({success: false});
+    }
   }
 });
 

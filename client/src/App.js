@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EventSender from './components/event-sender/index';
 import TeamCode from './components/team-code/index';
+import ArduinoBoard from './components/arduino-board/index';
 
 import './App.css';
 
@@ -16,7 +17,7 @@ class App extends Component {
   componentDidMount() {
     const escapeStep = localStorage.getItem('escape-step');
     if (escapeStep) {
-      this.setState({escapeStep: parseInt(escapeStep)});
+      this.setState({escapeStep: parseInt(escapeStep, 10)});
     }
   }
 
@@ -33,7 +34,7 @@ class App extends Component {
         case 1:  return <TeamCode nextEscapeStep={this.nextEscapeStep}/>;
         case 2:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
         case 3:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
-        case 4:  return <EventSender />;
+        case 4:  return <ArduinoBoard />;
 
         default:  return <h1>what did you do</h1>
       }

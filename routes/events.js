@@ -46,6 +46,7 @@ router.post('/send-data', (req, res) => {
     if (x === 1115) {
       event.properties.price = 19.20;
       event.properties.cart_size = 14;
+      event.properties.phone_number = "1-415-717-2511";
     } else {
       event.properties.price = Math.floor(Math.random() * 3000) / 100;
       if (event.properties.price < 20) {
