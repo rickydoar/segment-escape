@@ -1,0 +1,24 @@
+{
+  "name": "demo-master",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "concurrently": "^3.6.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "downshift": "^2.0.10",
+    "evergreen-ui": "^4.0.0-1",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "mongodb": "^3.5.2",
+    "morgan": "^1.9.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.12.0",
+    "request": "^2.88.0"
+  }
+}
