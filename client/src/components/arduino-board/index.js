@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import { Button, TextInput, toaster } from 'evergreen-ui'
+import { Button, toaster } from 'evergreen-ui'
 
 class ArduinoBoard extends React.Component {
   constructor(props) {

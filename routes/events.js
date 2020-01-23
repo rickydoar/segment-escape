@@ -6,7 +6,7 @@ router.post('/send-one-event', (req, res) => {
   const url = req.body.url;
   request.post(url, {
     json: {
-      data: 'ewogICJhbm9ueW1vdXNJZCI6ICJhYmMxMjMiLAogICJldmVudCI6ICJTdGVwIE9uZSIsCiAgInByb3BlcnRpZXMiOiB7CiAgICAiY2x1ZV8xIjogIkNvbm5lY3QgdG8gYW4gYW5hbHl0aWNzIHRvb2wgb2YgeW91ciBjaG9pY2UgYmVmb3JlIHN0YXJ0aW5nIHRoZSBuZXh0IHN0ZXAiLAogICAgImNsdWVfMiI6ICJZb3UgYXJlIGxvb2tpbmcgZm9yIHRoZSBzaG9wcGVyIHdobyBib3VnaHQgdGhlIG1vc3QgaXRlbXMgYXQgb25jZSB0aW1lIHdoaWxlIHNwZW5kaW5nIGxlc3MgdGhhbiAyMCBkb2xsYXJzIiwKICAgICJjbHVlXzMiOiAiVGhhdCB1c2VyJ3MgSUQgd2lsbCBnZXQgeW91IHRvIHlvdXIgbmV4dCB0YXNrIiwKICAgICJjbHVlXzQiOiAiVXNlIHRoZSBzYW1lIHNvdXJjZSBmdW5jdGlvbiBmb3IgdGhlIG5leHQgc3RlcCIsCiAgICAiY2x1ZV81IjogIldoZW4geW91IGFyZSBjb25maWRlbnQgaW4geW91ciBzb3VyY2UgZnVuY3Rpb24sIHRoZSBwYXNzd29yZCB0byB0aGUgbmV4dCBzdGVwIGlzIFByYWthc2g0UHJlc2lkZW50IgogIH0sCiAgInVzZXJJZCI6ICJ0ZXN0Igp9',
+      data: 'ewogICJldmVudCI6ICJTdGVwIE9uZSIsCiAgInByb3BlcnRpZXMiOiB7CiAgICAiYW5vbnltb3VzSWQiOiAiYWJjMTIzIiwKICAgICJjbHVlXzEiOiAiQ29ubmVjdCB0byBhbiBhbmFseXRpY3MgdG9vbCBvZiB5b3VyIGNob2ljZSBiZWZvcmUgc3RhcnRpbmcgdGhlIG5leHQgc3RlcCIsCiAgICAiY2x1ZV8yIjogIllvdSBhcmUgbG9va2luZyBmb3IgdGhlIHNob3BwZXIgd2hvIGJvdWdodCB0aGUgbW9zdCBpdGVtcyBhdCBvbmNlIHRpbWUgd2hpbGUgc3BlbmRpbmcgbGVzcyB0aGFuIDIwIGRvbGxhcnMiLAogICAgImNsdWVfMyI6ICJUaGF0IHVzZXIncyBJRCB3aWxsIGdldCB5b3UgdG8geW91ciBuZXh0IHRhc2siLAogICAgImNsdWVfNCI6ICJVc2UgdGhlIHNhbWUgc291cmNlIGZ1bmN0aW9uIGZvciB0aGUgbmV4dCBzdGVwIiwKICAgICJjbHVlXzUiOiAiV2hlbiB5b3UgYXJlIGNvbmZpZGVudCBpbiB5b3VyIHNvdXJjZSBmdW5jdGlvbiwgdGhlIHBhc3N3b3JkIHRvIHRoZSBuZXh0IHN0ZXAgaXMgUHJha2FzaDRQcmVzaWRlbnQiCiAgICAidXNlcklkIjogInRlc3QiCiAgfSwKfQ',
       encoding_type: 'base64'
     }
   }, (error, res, body) => {
@@ -40,9 +40,9 @@ router.post('/send-data', (req, res) => {
       return
     }
   })
-  for (x=1000; x < 1200; x++) {
-    event.userId = String(x);
-    event.anonymousId = Buffer.from(JSON.stringify(x)).toString('base64');
+  for (x=1000; x < 1300; x++) {
+    event.properties.userId = String(x);
+    event.properties.anonymousId = Buffer.from(JSON.stringify(x)).toString('base64');
     if (x === 1115) {
       event.properties.price = 19.20;
       event.properties.cart_size = 14;
