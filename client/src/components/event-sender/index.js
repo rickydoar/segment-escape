@@ -107,7 +107,7 @@ class EventBuilder extends React.Component {
           <TextInput
             onChange={this.updateInputValue}
             onKeyDown={this.sendEvent}
-            placeholder='Enter URL'
+            placeholder=''
             value={this.state.inputValue}
           />
           <Button marginLeft={5} appearance="primary" intent="success" onClick={this.sendEvent}>Send</Button>
