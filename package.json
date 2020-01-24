@@ -16,9 +16,11 @@
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
     "mongodb": "^3.5.2",
+    "mongoose": "^5.8.9",
     "morgan": "^1.9.1",
     "react": "^16.4.1",
     "react-dom": "^16.12.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "validator": "^12.1.0"
   }
 }
