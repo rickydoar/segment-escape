@@ -6,8 +6,18 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var eventsRouter = require('./routes/events');
+var deviceApiRouter = require('./routes/deviceApi');
+
+var models, { connectDb } = require('./models');
+var bodyParser = require('body-parser');
 
 var app = express();
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+
+app.use('/deviceApi', deviceApiRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,12 +35,18 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/', indexRouter);
 app.use('/events', eventsRouter);
 
-app.get('*', (req, res) => {
+
+app.get(['/','/events'], (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
 const port = process.env.PORT || 3001;
 
-app.listen(port);
+
+connectDb().then(async () => {
+  app.listen(port, () =>
+    console.log(`Listening on port ${port}...`),
+  );
+});
 
 module.exports = app;
