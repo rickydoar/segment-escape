@@ -6,6 +6,10 @@ let messageSchema = new mongoose.Schema({
     type: String,
     unique: false,
   },
+  deviceId: {
+    type: String,
+    unique: false,
+  },
   timestamp : { type : Date, default: Date.now }
 });
 
