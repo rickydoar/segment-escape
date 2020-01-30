@@ -60,17 +60,22 @@ router.post('/messages/push', (req, res) => {
   var deviceId = JSON.stringify(req.body.deviceId);
   var messageToPush = JSON.stringify(req.body.message);
 
-  var newMessage = new message({ text: messageToPush, deviceId: deviceId});
+  if(messageToPush.length>100) {
+    console.log("Could not saved new message: "+ deviceId +". String too long (max:100)");
+    res.send({"success": false, "error":"Message character length cannot exceed 100."});
+  } else {
+    var newMessage = new message({ text: messageToPush, deviceId: deviceId});
 
-  newMessage.save(function (err, results) {
-    if (err) {
-        // handle error
-    } else {
-        // handle document
-        console.log("Saved new message: "+ deviceId +".");
-        res.send({"success": true});
-    }
-  });
+    newMessage.save(function (err, results) {
+      if (err) {
+          // handle error
+      } else {
+          // handle document
+          console.log("Saved new message: "+ deviceId +".");
+          res.send({"success": true});
+      }
+    });
+  }
 });
 
 router.post('/messages/pop', (req, res) => {
