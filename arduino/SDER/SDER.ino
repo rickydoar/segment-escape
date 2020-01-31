@@ -13,7 +13,7 @@
 #define NOTE_DH2 661
 
 String DEVICE_ID = "12345";
-String REMOTE_URL = "http://192.168.86.72:3000/deviceApi";
+String REMOTE_URL = "http://se-data-escape-room.herokuapp.com/deviceApi";
 
 const IPAddress apIP(192, 168, 4, 1);
 const char* apSSID = "M5STACK_SETUP";
