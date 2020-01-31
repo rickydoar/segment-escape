@@ -1,8 +1,15 @@
+# GITIGNORE
 node_modules
 client/node_modules
+
 package-lock.json
 client/package-lock.json
+
+*.log
+*.gz
+
 build
 npm-debug.log
+
 .env
 .DS_Store
