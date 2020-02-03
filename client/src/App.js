@@ -27,15 +27,27 @@ class App extends Component {
     this.setState({escapeStep});
   }
 
+  sendDeviceMessage(deviceId, message) {
+    debugger;
+    fetch('/deviceApi/messages/push', {
+      method: 'POST',
+      body: JSON.stringify({
+        deviceId: deviceId,
+        message: message
+      }),
+      headers: {"Content-Type": "application/json"}
+    });
+  }
+
   render() {
     const escapeStep = () => {
       switch(this.state.escapeStep) {
 
         case 1:  return <TeamCode nextEscapeStep={this.nextEscapeStep}/>;
-        case 2:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
-        case 3:  return <ArduinoBoard nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
-        case 4:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
-        case 5:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
+        case 2:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep} sendDeviceMessage={this.sendDeviceMessage}/>;
+        case 3:  return <ArduinoBoard nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep} sendDeviceMessage={this.sendDeviceMessage}/>;
+        case 4:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep} sendDeviceMessage={this.sendDeviceMessage}/>;
+        case 5:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep} sendDeviceMessage={this.sendDeviceMessage}/>;
 
         default:  return <h1>what did you do</h1>
       }

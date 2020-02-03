@@ -20,6 +20,10 @@ class EventBuilder extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.escapeStep === 4) {
+      const deviceId = localStorage.getItem('team-code');
+      this.props.sendDeviceMessage(deviceId,"Find the userId of the user who purchased the most items at once for under 20 dollars..");
+    }
   }
 
   sendData() {

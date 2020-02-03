@@ -1,23 +1,6 @@
 import React from 'react';
 import './index.css';
-import { Button, toaster, TextInput } from 'evergreen-ui'
-
-const OP_SOUND = "OP_SOUND";
-
-function sendDeviceMessage(deviceId, message) {
-  fetch('/deviceApi/messages/push', {
-    method: 'POST',
-    body: JSON.stringify({
-      deviceId: deviceId,
-      message: message
-    }),
-    headers: {"Content-Type": "application/json"}
-  });
-}
-
-function sendDeviceSound(deviceId) {
-  sendDeviceMessage(deviceId,OP_SOUND)
-}
+import { Button, toaster, TextInput } from 'evergreen-ui';
 
 class ArduinoBoard extends React.Component {
   constructor(props) {
@@ -37,9 +20,9 @@ class ArduinoBoard extends React.Component {
     toaster.success('Ping!');
     console.log("Ping!");
 
-    var thisUrl = window.location.href + "/deviceApi";
-    sendDeviceMessage("12345","Welcome!");
-    sendDeviceSound("12345");
+    const deviceId = localStorage.getItem('team-code');
+    this.props.sendDeviceMessage(deviceId,"Welcome! The Secret Code is CDP2020.");
+    this.props.sendDeviceMessage(deviceId, 'OP_SOUND');
   }
 
   submitPassword(e) {
