@@ -33,8 +33,9 @@ class App extends Component {
 
         case 1:  return <TeamCode nextEscapeStep={this.nextEscapeStep}/>;
         case 2:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
-        case 3:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
-        case 4:  return <ArduinoBoard />;
+        case 3:  return <ArduinoBoard nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
+        case 4:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
+        case 5:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep}/>;
 
         default:  return <h1>what did you do</h1>
       }

@@ -1,20 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
+const Analytics = require('analytics-node');
 
 router.post('/send-one-event', (req, res) => {
-  const url = req.body.url;
-  request.post(url, {
-    json: {
-      data: 'ewogICJldmVudCI6ICJTdGVwIE9uZSIsCiAgInByb3BlcnRpZXMiOiB7CiAgICAiYW5vbnltb3VzSWQiOiAiYWJjMTIzIiwKICAgICJjbHVlXzEiOiAiQ29ubmVjdCB0byBhbiBhbmFseXRpY3MgdG9vbCBvZiB5b3VyIGNob2ljZSBiZWZvcmUgc3RhcnRpbmcgdGhlIG5leHQgc3RlcCIsCiAgICAiY2x1ZV8yIjogIlVzZSB0aGUgc2FtZSBzb3VyY2UgZnVuY3Rpb24gZm9yIHRoZSBuZXh0IHN0ZXAiLAogICAgImNsdWVfMyI6ICJXaGVuIHlvdSBhcmUgY29uZmlkZW50IGluIHlvdXIgc291cmNlIGZ1bmN0aW9uLCB0aGUgcGFzc3dvcmQgdG8gdGhlIG5leHQgc3RlcCBpcyBQcmFrYXNoNFByZXNpZGVudCIsCiAgICAidXNlcklkIjogInRlc3QiCiAgfQp9',
-      encoding_type: 'base64'
-    }
-  }, (error, res, body) => {
-    if (error) {
-      console.error(error)
-      return
-    }
-  })
+  const escapeStep = req.body.escapeStep;
+  if (escapeStep !== 5) {
+    const url = req.body.url;
+    request.post(url, {
+      json: {
+        data: 'ewogICJldmVudCI6ICJTdGVwIE9uZSIsCiAgInByb3BlcnRpZXMiOiB7CiAgICAiYW5vbnltb3VzSWQiOiAiYWJjMTIzIiwKICAgICJjbHVlXzEiOiAiQ29ubmVjdCB0byBhbiBhbmFseXRpY3MgdG9vbCBvZiB5b3VyIGNob2ljZSBiZWZvcmUgc3RhcnRpbmcgdGhlIG5leHQgc3RlcCIsCiAgICAiY2x1ZV8yIjogIlVzZSB0aGUgc2FtZSBzb3VyY2UgZnVuY3Rpb24gZm9yIHRoZSBuZXh0IHN0ZXAiLAogICAgImNsdWVfMyI6ICJXaGVuIHlvdSBhcmUgY29uZmlkZW50IGluIHlvdXIgc291cmNlIGZ1bmN0aW9uLCB0aGUgcGFzc3dvcmQgdG8gdGhlIG5leHQgc3RlcCBpcyBQcmFrYXNoNFByZXNpZGVudCIsCiAgICAidXNlcklkIjogInRlc3QiCiAgfQp9',
+        encoding_type: 'base64'
+      }
+    }, (error, res, body) => {
+      if (error) {
+        console.error(error)
+        return
+      }
+    })
+  } else {
+    const writeKey = req.body.writeKey;
+    const analytics = new Analytics(writeKey);
+    analytics.track({
+      userId: 'segment-presales',
+      event: 'Send me to the Arduino Board!',
+      properties: {
+        text: 'We win!',
+        SKO: 'It is almost over!'
+      }
+    });
+  }
   res.send({succes: true});
 });
 
