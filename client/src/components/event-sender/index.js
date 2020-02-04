@@ -75,6 +75,7 @@ class EventBuilder extends React.Component {
           body: JSON.stringify({
             writeKey: writeKey,
             escapeStep: this.props.escapeStep,
+            deviceId: localStorage.getItem('team-code');
           }),
           headers: {"Content-Type": "application/json"}
         })
