@@ -28,7 +28,6 @@ class App extends Component {
   }
 
   sendDeviceMessage(deviceId, message) {
-    debugger;
     fetch('/deviceApi/messages/push', {
       method: 'POST',
       body: JSON.stringify({
