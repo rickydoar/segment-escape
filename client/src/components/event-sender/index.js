@@ -123,13 +123,13 @@ class EventBuilder extends React.Component {
   render() {
     const codeString = `curl -X POST \n
         http://se-data-escape-room.herokuapp.com/deviceApi/messages/push \n
-        -H \'Content-Type: application/json\' \n
-        -H \'Postman-Token: 5c5b9a9c-0c8c-49e7-8877-20496fc392a8\' \n
-        -H \'cache-control: no-cache\' \n
-        -d \'{
+        -H 'Content-Type: application/json' \n
+        -H 'Postman-Token: 5c5b9a9c-0c8c-49e7-8877-20496fc392a8' \n
+        -H 'cache-control: no-cache' \n
+        -d '{
               "deviceId": "12345",
               "message" : "Hello"
-      }\'`;
+      }'`;
     const eventSender = () => {
       return <div className='text-container'>
                <TextInput
