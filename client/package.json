@@ -8,6 +8,7 @@
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
+    "react-syntax-highlighter": "^12.2.1",
     "valid-url": "^1.0.9"
   },
   "scripts": {
@@ -18,8 +19,8 @@
   },
   "proxy": {
     "/": {
-        "changeOrigin": true,
-        "target": "http://localhost:3001"
+      "changeOrigin": true,
+      "target": "http://localhost:3001"
     }
   }
 }

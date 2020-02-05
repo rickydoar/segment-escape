@@ -27,7 +27,7 @@ class TeamCode extends React.Component {
   render() {
     return (
       <div className='step-container'>
-        Step One... This one should be easy.
+        Step 1: This one should be easy...
         <div className='text-container'>
           <TextInput
             onChange={this.updateInputValue}

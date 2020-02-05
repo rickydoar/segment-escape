@@ -2,6 +2,8 @@ import React from 'react';
 import './index.css';
 import { Button, TextInput, toaster } from 'evergreen-ui'
 import validUrl from 'valid-url'
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 class EventBuilder extends React.Component {
   constructor(props) {
@@ -75,6 +77,7 @@ class EventBuilder extends React.Component {
           body: JSON.stringify({
             writeKey: writeKey,
             escapeStep: this.props.escapeStep,
+            deviceId: localStorage.getItem('team-code'),
           }),
           headers: {"Content-Type": "application/json"}
         })
@@ -118,6 +121,15 @@ class EventBuilder extends React.Component {
   }
 
   render() {
+    const codeString = `curl -X POST \n
+        http://se-data-escape-room.herokuapp.com/deviceApi/messages/push \n
+        -H \'Content-Type: application/json\' \n
+        -H \'Postman-Token: 5c5b9a9c-0c8c-49e7-8877-20496fc392a8\' \n
+        -H \'cache-control: no-cache\' \n
+        -d \'{
+              "deviceId": "12345",
+              "message" : "Hello"
+      }\'`;
     const eventSender = () => {
       return <div className='text-container'>
                <TextInput
@@ -173,6 +185,14 @@ class EventBuilder extends React.Component {
                                value={this.state.inputValue}
                              />
                              <Button marginLeft={5} appearance="primary" intent="success" onClick={this.sendEvent}>Send</Button>
+                           </div>
+                           <div className='code-example-container'>
+                             <div className='code-example'>
+                              Make a destination function that takes the event and outputs a request similar to below.
+                               <SyntaxHighlighter language="javascript" style={docco}>
+                                 { codeString }
+                               </SyntaxHighlighter>
+                             </div>
                            </div>
                         </div>;
 

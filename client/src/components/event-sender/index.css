@@ -9,3 +9,18 @@
 .tips {
   margin-top: 20px
 }
+
+.code-example-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.code-example {
+  width: 600px;
+}
+
+pre {
+  text-align: left;
+}

@@ -21,11 +21,13 @@ router.post('/send-one-event', (req, res) => {
   } else {
     const writeKey = req.body.writeKey;
     const analytics = new Analytics(writeKey);
+    const deviceId = req.body.deviceId;
     analytics.track({
       userId: 'segment-presales',
       event: 'Send me to the Arduino Board!',
       properties: {
-        text: 'We win!',
+        message: 'We win!',
+        deviceId: deviceId,
         SKO: 'It is almost over!'
       }
     });
