@@ -29,6 +29,7 @@ class EventBuilder extends React.Component {
   }
 
   sendData() {
+    this.props.sendDeviceMessage(deviceId,"Did you remember to connect an analytics tool as a destination??");
     const url = this.state.inputValue;
     if (validUrl.isUri(url) && !this.state.dataFlowing) {
       this.setState({dataFlowing: true});
@@ -145,7 +146,7 @@ class EventBuilder extends React.Component {
       switch(this.props.escapeStep) {
 
         case 2:  return <div className='step-container'>
-                          <div>Step 2: Let's see how you function as a team. Go directly to the source.</div>
+                          <div>Step 2: Let's see how you function as a team. Go directly to the source. (Hint hint, source... function...)</div>
                           { eventSender() }
                           <div className='password-container'>
                             <TextInput
