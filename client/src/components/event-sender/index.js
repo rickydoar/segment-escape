@@ -75,19 +75,23 @@ class EventBuilder extends React.Component {
         }
       } else {
         const writeKey = this.state.inputValue;
-        fetch('/events/send-one-event', {
-          method: 'POST',
-          body: JSON.stringify({
-            writeKey: writeKey,
-            escapeStep: this.props.escapeStep,
-            deviceId: localStorage.getItem('team-code'),
-          }),
-          headers: {"Content-Type": "application/json"}
-        })
-          .then(res => res.json())
-          .then(() => {
-            toaster.success('Event Sent');
-          });
+        if (writeKey.length === 32) {
+          fetch('/events/send-one-event', {
+            method: 'POST',
+            body: JSON.stringify({
+              writeKey: writeKey,
+              escapeStep: this.props.escapeStep,
+              deviceId: localStorage.getItem('team-code'),
+            }),
+            headers: {"Content-Type": "application/json"}
+          })
+            .then(res => res.json())
+            .then(() => {
+              toaster.success('Event Sent');
+            });
+        } else {
+          toaster.warning('That does not look like a writeKey...')
+        }
       }
     }
   }
