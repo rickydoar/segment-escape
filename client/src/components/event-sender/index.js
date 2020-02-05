@@ -29,7 +29,9 @@ class EventBuilder extends React.Component {
   }
 
   sendData() {
+    const deviceId = localStorage.getItem('team-code');
     this.props.sendDeviceMessage(deviceId,"Did you remember to connect an analytics tool as a destination??");
+
     const url = this.state.inputValue;
     if (validUrl.isUri(url) && !this.state.dataFlowing) {
       this.setState({dataFlowing: true});
