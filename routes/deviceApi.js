@@ -50,6 +50,22 @@ router.post('/messages/count', (req, res) => {
         res.send({"success": true, "deviceId": deviceId, "count":count});
     }
   });
+
+  //Update last seen
+  device.update(
+    {deviceId: deviceId}, // find a document with that filter
+    {lastUpdated: Date.now()}, // document to insert when nothing was found
+    {}, // options
+    function (err, doc) { // callback
+        if (err) {
+            // handle error
+        } else {
+            // handle document
+            //res.send({success: true})
+            console.log('Updated lastUpdated for device: ' + deviceId);
+        }
+    }
+  );
 });
 
 router.post('/messages/push', (req, res) => {

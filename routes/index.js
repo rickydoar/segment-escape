@@ -17,7 +17,13 @@ router.post('/password', (req, res) => {
     } else {
       res.send({success: false});
     }
-  } else if (escapeStep === '3') {
+  }  else if (escapeStep === '3') {
+    if (password === 'CDP2020') {
+      res.send({success: true});
+    } else {
+      res.send({success: false});
+    }
+  } else if (escapeStep === '4') {
     if (password === '1115') {
       res.send({success: true});
     } else {

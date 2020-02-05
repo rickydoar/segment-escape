@@ -33,7 +33,7 @@ Preferences preferences;
 
 void setup() {
   M5.begin(true, false, false, false);
-  M5.Power.begin();
+  //M5.Power.begin();
   Serial.begin(115200);
   if(!SPIFFS.begin(true)){
       Serial.println("SPIFFS Mount Failed");

@@ -2,6 +2,8 @@ import React from 'react';
 import './index.css';
 import { Button, TextInput, toaster } from 'evergreen-ui'
 import validUrl from 'valid-url'
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 class EventBuilder extends React.Component {
   constructor(props) {
@@ -20,6 +22,10 @@ class EventBuilder extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.escapeStep === 4) {
+      const deviceId = localStorage.getItem('team-code');
+      this.props.sendDeviceMessage(deviceId,"Find the userId of the user who purchased the most items at once for under 20 dollars..");
+    }
   }
 
   sendData() {
@@ -46,12 +52,32 @@ class EventBuilder extends React.Component {
 
   sendEvent(e) {
     if (e.type === 'click' || e.key === 'Enter') {
-      const url = this.state.inputValue;
-      if (validUrl.isUri(url)) {
+      if (this.props.escapeStep !== 5) {
+        const url = this.state.inputValue;
+        if (validUrl.isUri(url)) {
+          fetch('/events/send-one-event', {
+            method: 'POST',
+            body: JSON.stringify({
+              url: url,
+              escapeStep: this.props.escapeStep,
+            }),
+            headers: {"Content-Type": "application/json"}
+          })
+            .then(res => res.json())
+            .then(() => {
+              toaster.success('Event Sent');
+            });
+        } else {
+          toaster.warning('That is not a valid url.')
+        }
+      } else {
+        const writeKey = this.state.inputValue;
         fetch('/events/send-one-event', {
           method: 'POST',
           body: JSON.stringify({
-            url: url,
+            writeKey: writeKey,
+            escapeStep: this.props.escapeStep,
+            deviceId: localStorage.getItem('team-code'),
           }),
           headers: {"Content-Type": "application/json"}
         })
@@ -59,8 +85,6 @@ class EventBuilder extends React.Component {
           .then(() => {
             toaster.success('Event Sent');
           });
-      } else {
-        toaster.warning('That is not a valid url.')
       }
     }
   }
@@ -78,6 +102,7 @@ class EventBuilder extends React.Component {
         .then(res => res.json())
         .then(body => {
           if (body.success) {
+            this.setState({inputValue: ''});
             this.props.nextEscapeStep();
           } else {
             toaster.warning('WRONG!!');
@@ -96,49 +121,88 @@ class EventBuilder extends React.Component {
   }
 
   render() {
-    return (
-      <div className='step-container'>
-        {this.props.escapeStep === 2 ? (
-          <div>Step 2: Let's see how you function as a team. Go directly to the source.</div>
-        ) : (
-          <div>Step 3: Let's hope your source function is working... You can still test single events here, but if you're confident... SEND IN THE DATA!</div>
-        )}
-        <div className='text-container'>
-          <TextInput
-            onChange={this.updateInputValue}
-            onKeyDown={this.sendEvent}
-            placeholder=''
-            value={this.state.inputValue}
-          />
-          <Button marginLeft={5} appearance="primary" intent="success" onClick={this.sendEvent}>Send</Button>
-        </div>
+    const codeString = `curl -X POST \n
+        http://se-data-escape-room.herokuapp.com/deviceApi/messages/push \n
+        -H \'Content-Type: application/json\' \n
+        -H \'Postman-Token: 5c5b9a9c-0c8c-49e7-8877-20496fc392a8\' \n
+        -H \'cache-control: no-cache\' \n
+        -d \'{
+              "deviceId": "12345",
+              "message" : "Hello"
+      }\'`;
+    const eventSender = () => {
+      return <div className='text-container'>
+               <TextInput
+                 onChange={this.updateInputValue}
+                 onKeyDown={this.sendEvent}
+                 placeholder=''
+                 value={this.state.inputValue}
+               />
+               <Button marginLeft={5} appearance="primary" intent="success" onClick={this.sendEvent}>Send</Button>
+             </div>
+    }
+    const stepContent = () => {
+      switch(this.props.escapeStep) {
 
-        {this.props.escapeStep === 2 ? (
-            <div className='password-container'>
-              <TextInput
-                onChange={this.updatePassword}
-                onKeyDown={this.submitPassword}
-                placeholder='On to the next step?'
-                value={this.state.password}
-              />
-              <Button marginLeft={5} appearance="primary" intent="success" onClick={this.submitPassword}>Submit Password</Button>
-            </div>
-          ) : (
-            <div>
-              <div className='send-in-the-data'>
-                <Button marginLeft={5} intent="danger" onClick={this.sendData}>SEND IN THE DATA!</Button>
-              </div>
-              <div className='password-container'>
-                <TextInput
-                  onChange={this.updatePassword}
-                  onKeyDown={this.submitPassword}
-                  placeholder='On to the next step?'
-                  value={this.state.password}
-                />
-                <Button marginLeft={5} appearance="primary" intent="success" onClick={this.submitPassword}>Submit Password</Button>
-              </div>
-            </div>
-          )}
+        case 2:  return <div className='step-container'>
+                          <div>Step 2: Let's see how you function as a team. Go directly to the source.</div>
+                          { eventSender() }
+                          <div className='password-container'>
+                            <TextInput
+                              onChange={this.updatePassword}
+                              onKeyDown={this.submitPassword}
+                              placeholder='On to the next step?'
+                              value={this.state.password}
+                            />
+                            <Button marginLeft={5} appearance="primary" intent="success" onClick={this.submitPassword}>Submit Password</Button>
+                          </div>
+                        </div>;
+        case 4:  return <div className='step-container'>
+                          <div>Step 4: Let's hope your source function is working... You can still test single events here, but if you're confident... SEND IN THE DATA!</div>
+                          { eventSender() }
+                          <div>
+                            <div className='send-in-the-data'>
+                              <Button marginLeft={5} intent="danger" onClick={this.sendData}>SEND IN THE DATA!</Button>
+                            </div>
+                            <div className='password-container'>
+                              <TextInput
+                                onChange={this.updatePassword}
+                                onKeyDown={this.submitPassword}
+                                placeholder='On to the next step?'
+                                value={this.state.password}
+                              />
+                              <Button marginLeft={5} appearance="primary" intent="success" onClick={this.submitPassword}>Submit Password</Button>
+                            </div>
+                          </div>
+                        </div>;
+        case 5:  return <div>
+                          <div>Step 5: Almost at the final destination!</div>
+                          <div className='text-container'>
+                             <TextInput
+                               onChange={this.updateInputValue}
+                               onKeyDown={this.sendEvent}
+                               placeholder='Enter writeKey...'
+                               value={this.state.inputValue}
+                             />
+                             <Button marginLeft={5} appearance="primary" intent="success" onClick={this.sendEvent}>Send</Button>
+                           </div>
+                           <div className='code-example-container'>
+                             <div className='code-example'>
+                              Make a destination function that takes the event and outputs a request similar to below.
+                               <SyntaxHighlighter language="javascript" style={docco}>
+                                 { codeString }
+                               </SyntaxHighlighter>
+                             </div>
+                           </div>
+                        </div>;
+
+        default:  return <h1>what did you do</h1>
+      }
+    }
+
+    return (
+      <div>
+      { stepContent() }
       </div>
     );
   }
