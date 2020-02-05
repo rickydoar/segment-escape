@@ -23,3 +23,9 @@
 .text-container {
   margin-top: 10px;
 }
+
+.team-code {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}

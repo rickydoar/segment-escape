@@ -52,11 +52,20 @@ class App extends Component {
       }
     }
 
+    const teamCode = () => {
+      const code = localStorage.getItem('team-code');
+      if (code) {
+        return "Team code: " + code;
+      }
+      return "";
+    }
+
     return (
       <div className="App">
         <div className="title">
           Welcome to the Segment Data Challenge
         </div>
+        <div className="team-code"> { teamCode() } </div>
         <div> { escapeStep() } </div>
       </div>
     );
