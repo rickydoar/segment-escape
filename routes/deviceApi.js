@@ -32,11 +32,29 @@ router.post('/register', (req, res) => {
 
 });
 
+router.post('/getdevices', (req, res) => {
+  //console.log('Getting Devices...');
+
+  //console.log(req.body);
+
+  device.find({})
+        .exec(function (err, results) {
+    if (err) {
+        // handle error
+    } else {
+        // handle document
+        var devices = results;
+        res.send({"success": true, "devices": devices});
+    }
+  });
+
+});
+
 
 router.post('/messages/count', (req, res) => {
-  console.log('Count Messages...');
+  //console.log('Count Messages...');
 
-  console.log(req.body);
+  //console.log(req.body);
 
   var deviceId = JSON.stringify(req.body.deviceId); //'12345'; //
 

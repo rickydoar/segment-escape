@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EventSender from './components/event-sender/index';
 import TeamCode from './components/team-code/index';
 import ArduinoBoard from './components/arduino-board/index';
+import AdminPanel from './components/admin-panel/index';
 
 import './App.css';
 
@@ -22,20 +23,16 @@ class App extends Component {
   }
 
   nextEscapeStep() {
-    const escapeStep = this.state.escapeStep + 1;
-    localStorage.setItem('escape-step', escapeStep);
-    this.setState({escapeStep});
-  }
-
-  sendDeviceMessage(deviceId, message) {
-    fetch('/deviceApi/messages/push', {
-      method: 'POST',
-      body: JSON.stringify({
-        deviceId: deviceId,
-        message: message
-      }),
-      headers: {"Content-Type": "application/json"}
-    });
+    const teamCode = localStorage.getItem('team-code');
+    if(teamCode=="-1") {
+      const escapeStep = -1;
+      localStorage.setItem('escape-step', escapeStep);
+      this.setState({escapeStep});
+    } else {
+      const escapeStep = this.state.escapeStep + 1;
+      localStorage.setItem('escape-step', escapeStep);
+      this.setState({escapeStep});
+    }
   }
 
   render() {
@@ -47,6 +44,7 @@ class App extends Component {
         case 3:  return <ArduinoBoard nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep} sendDeviceMessage={this.sendDeviceMessage}/>;
         case 4:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep} sendDeviceMessage={this.sendDeviceMessage}/>;
         case 5:  return <EventSender nextEscapeStep={this.nextEscapeStep} escapeStep={this.state.escapeStep} sendDeviceMessage={this.sendDeviceMessage}/>;
+        case -1: return <AdminPanel/>;
 
         default:  return <h1>what did you do</h1>
       }
@@ -55,7 +53,11 @@ class App extends Component {
     const teamCode = () => {
       const code = localStorage.getItem('team-code');
       if (code) {
-        return "Team code: " + code;
+        if(code=="-1") {
+          return "Admin Mode";
+        } else {
+          return "Team code: " + code;
+        }
       }
       return "";
     }
