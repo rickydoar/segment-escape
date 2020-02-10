@@ -11,8 +11,9 @@
 #include <HTTPClient.h>
 
 #define NOTE_DH2 661
+#define NOTE_DL6 248
 
-String DEVICE_ID = "12345";
+String DEVICE_ID = "SE003";
 String REMOTE_URL = "http://se-data-escape-room.herokuapp.com/deviceApi";
 
 const IPAddress apIP(192, 168, 4, 1);
@@ -373,6 +374,8 @@ void handleMessages() {
 
                   if(message=="\"OP_SOUND\"") {
                     playSound();
+                  } else if(message=="\"We Win!\"") {
+                    drawWinScreen();
                   } else {
                     drawMessage(message);
                   }
@@ -408,6 +411,15 @@ void handleMessages() {
 
 void playSound() {
   M5.Speaker.tone(NOTE_DH2, 200); //frequency 3000, with a duration of 200ms
+}
+
+void drawWinScreen() {
+  M5.Lcd.fillScreen(GREEN);
+  M5.Lcd.setCursor(10, 100);
+  M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.setTextSize(3);
+  M5.Lcd.printf("YOU WIN!");
+  M5.Speaker.tone(NOTE_DL6, 200);
 }
 
 void setupMode() {
