@@ -24,11 +24,14 @@ class EventBuilder extends React.Component {
   componentDidMount() {
     if (this.props.escapeStep === 4) {
       const deviceId = localStorage.getItem('team-code');
-      this.props.sendDeviceMessage(deviceId,"Find the userId of the user who purchased the most items at once for under 20 dollars..");
+      this.props.sendDeviceMessage(deviceId,"Find the userId who ordered the most items at once where the max order size was under 20 dollars..");
     }
   }
 
   sendData() {
+    const deviceId = localStorage.getItem('team-code');
+    this.props.sendDeviceMessage(deviceId,"Did you remember to connect an analytics tool as a destination??");
+
     const url = this.state.inputValue;
     if (validUrl.isUri(url) && !this.state.dataFlowing) {
       this.setState({dataFlowing: true});
@@ -72,19 +75,23 @@ class EventBuilder extends React.Component {
         }
       } else {
         const writeKey = this.state.inputValue;
-        fetch('/events/send-one-event', {
-          method: 'POST',
-          body: JSON.stringify({
-            writeKey: writeKey,
-            escapeStep: this.props.escapeStep,
-            deviceId: localStorage.getItem('team-code'),
-          }),
-          headers: {"Content-Type": "application/json"}
-        })
-          .then(res => res.json())
-          .then(() => {
-            toaster.success('Event Sent');
-          });
+        if (writeKey.length === 32) {
+          fetch('/events/send-one-event', {
+            method: 'POST',
+            body: JSON.stringify({
+              writeKey: writeKey,
+              escapeStep: this.props.escapeStep,
+              deviceId: localStorage.getItem('team-code'),
+            }),
+            headers: {"Content-Type": "application/json"}
+          })
+            .then(res => res.json())
+            .then(() => {
+              toaster.success('Event Sent');
+            });
+        } else {
+          toaster.warning('That does not look like a writeKey...')
+        }
       }
     }
   }
@@ -145,7 +152,7 @@ class EventBuilder extends React.Component {
       switch(this.props.escapeStep) {
 
         case 2:  return <div className='step-container'>
-                          <div>Step 2: Let's see how you function as a team. Go directly to the source.</div>
+                          <div>Step 2: Let's see how you function as a team. Go directly to the source. (Hint hint, source... function...)</div>
                           { eventSender() }
                           <div className='password-container'>
                             <TextInput

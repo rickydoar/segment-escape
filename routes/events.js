@@ -26,7 +26,7 @@ router.post('/send-one-event', (req, res) => {
       userId: 'segment-presales',
       event: 'Send me to the Arduino Board!',
       properties: {
-        message: 'We win!',
+        message: 'We Win!',
         deviceId: deviceId,
         SKO: 'It is almost over!'
       }
