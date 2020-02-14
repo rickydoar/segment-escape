@@ -33,6 +33,7 @@ class App extends Component {
       localStorage.setItem('escape-step', escapeStep);
       this.setState({escapeStep});
     }
+<<<<<<< HEAD
   }
 
   sendDeviceMessage(deviceId, message) {
@@ -44,6 +45,8 @@ class App extends Component {
       }),
       headers: {"Content-Type": "application/json"}
     });
+=======
+>>>>>>> e8a0ad73920e36f08c4e883ad1a6edf3f2ac335f
   }
 
   render() {
