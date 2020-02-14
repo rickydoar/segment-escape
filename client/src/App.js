@@ -35,6 +35,17 @@ class App extends Component {
     }
   }
 
+  sendDeviceMessage(deviceId, message) {
+    fetch('/deviceApi/messages/push', {
+      method: 'POST',
+      body: JSON.stringify({
+        deviceId: deviceId,
+        message: message
+      }),
+      headers: {"Content-Type": "application/json"}
+    });
+  }
+
   render() {
     const escapeStep = () => {
       switch(this.state.escapeStep) {
