@@ -14,7 +14,7 @@
     "debug": "~2.6.9",
     "downshift": "^2.0.10",
     "evergreen-ui": "^4.0.0-1",
-    "express": "~4.16.0",
+    "express": "~4.17.3",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
     "mongodb": "^3.5.2",
